@@ -1,0 +1,127 @@
+const cardObjectDefinitions = [
+  { id: 1, imagePath: "/images/card-KingHearts.png" },
+  { id: 2, imagePath: "/images/card-JackClubs.png" },
+  { id: 3, imagePath: "/images/card-QueenDiamonds.png" },
+  { id: 4, imagePath: "/images/card-AceSpades.png" },
+];
+
+const cardBackImgPath = "/images/card-back-blue.png";
+
+let cards = [];
+const playButtonElem = document.getElementById("palyGame");
+
+/* <div class="card">
+<div class="card-inner">
+    <div class="card-front">
+        <img src="/images/card-JackClubs.png" alt="" class="card-img">
+    </div>
+    <div class="card-back">
+        <img src="/images/card-back-Blue.png" alt="" class="card-img">
+    </div>
+</div>
+</div> */
+loadGame();
+
+function loadGame() {
+  createCards();
+  cards = document.querySelectorAll(".card");
+  playButtonElem.addEventListener("click", () => startGame());
+}
+
+function startGame() {
+  initializedGame();
+  startRound();
+}
+
+function initializedGame() {}
+
+function startRound() {
+  initalizedNewRound();
+}
+
+function collectCards() {}
+
+function initalizedNewRound() {}
+
+function createCards() {
+  cardObjectDefinitions.forEach((cardItem) => {
+    createCard(cardItem);
+  });
+}
+function createCard(cardItem) {
+  // create div element that up a card
+  const cardElem = createElement("div");
+  const cardInnerElem = createElement("div");
+  const cardFrontElem = createElement("div");
+  const cardBackElem = createElement("div");
+
+  const cardFrontImg = createElement("img");
+  const cardBackImg = createElement("img");
+
+  addClassToElement(cardElem, "card");
+  addIdToElement(cardElem, cardItem.id);
+
+  addClassToElement(cardInnerElem, "card-inner");
+
+  addClassToElement(cardFrontElem, "card-front");
+  addClassToElement(cardBackElem, "card-back");
+
+  addSrcImageElement(cardBackImg, cardBackImgPath);
+  addSrcImageElement(cardFrontImg, cardItem.imagePath);
+
+  addClassToElement(cardBackImg, "card-img");
+  addClassToElement(cardFrontImg, "card-img");
+
+  addChildElement(cardInnerElem, cardBackElem);
+
+  addChildElement(cardFrontElem, cardFrontImg);
+  addChildElement(cardBackElem, cardBackImg);
+
+  addChildElement(cardInnerElem, cardFrontElem);
+  addChildElement(cardInnerElem, cardBackElem);
+
+  //add inner card element as child element to card element
+  addChildElement(cardElem, cardInnerElem);
+
+  //   add card element as child element to appropriate
+  addCardToGridCell(cardElem);
+}
+
+function createElement(elmType) {
+  return document.createElement(elmType);
+}
+
+function addClassToElement(elem, className) {
+  elem.classList.add(className);
+}
+
+function addIdToElement(elem, id) {
+  elem.id = id;
+}
+
+function addSrcImageElement(imgElem, src) {
+  imgElem.src = src;
+}
+function addChildElement(parentElem, childElem) {
+  parentElem.appendChild(childElem);
+}
+
+function addCardToGridCell(card) {
+  const cardPositionClassName = mapClassToGridCell(card);
+  console.log("cardPositionClassName", cardPositionClassName);
+  const cardPosElem = document.querySelector(cardPositionClassName);
+  console.log("cardPosElem", cardPosElem);
+  addChildElement(cardPosElem, card);
+}
+
+function mapClassToGridCell(card) {
+  if (card.id == 1) {
+    return ".card-pos-a";
+  } else if (card.id == 2) {
+    return ".card-pos-b";
+  } else if (card.id == 3) {
+    return ".card-pos-c";
+  } else if (card.id == 4) {
+    return ".card-pos-d";
+  }
+}
